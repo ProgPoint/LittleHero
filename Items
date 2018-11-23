@@ -1,0 +1,87 @@
+<!document html>
+<html>
+	<head>
+		<title>Items</title>
+		
+		<style type="text/css">
+		
+			#treasureChest
+			{
+				background-color: #936130;
+				background: url(img/mTreasureChest.png);
+				height: 206;
+				width: 245;
+				border: none;
+				color: gold;
+				padding: 90px 32px 0px 32px;
+				text-align: center;
+				line-height: 165px;
+				text-decoration: none;
+				display: inline-block;
+				font-size: 24px;
+			}
+			
+		</style>
+
+	</head>
+	<body>
+		<h1>Little Hero Items</h1>
+		
+		<button id="treasureChest" type="button" onclick="openChest()">Treasure Chest</button>
+		
+		<p id="dropResults"></p>
+		
+		<script type="text/javascript">
+			
+			var rarity = ["Common", "Magic", "Rare", "Legendary", "Set"];
+			var weapons = ["Dager", "Sword", "Mace", "Axe", "Spear", "Stave", "Bow", "Crossbow", "Wand"];
+			
+			function openChest()
+			{	
+				if(document.getElementById("treasureChest").innerHTML != "")
+				{
+					var noDropItems = getRndInteger(0, 5);
+					var dropItems = [];
+					
+					document.getElementById("treasureChest").innerHTML = "";
+					document.getElementById("treasureChest").style.background = "url(img/mOpenTreasureChest.png)";
+					
+					while (noDropItems > 0)
+					{
+						dropItems.push(randomItemGenerator());
+						noDropItems--;
+					}
+					
+					if(dropItems.length > 0)
+					{
+						console.log(dropItems);
+						document.getElementById("dropResults").innerHTML = "Dropped items: <br>";
+						
+						for(i=0; i < dropItems.length; i++)
+						{
+							document.getElementById("dropResults").innerHTML +=
+							rarity[dropItems[i].rare] + " " + weapons[dropItems[i].type] + "<br>";
+						}
+					
+					}
+				}
+			}
+			
+			function getRndInteger(min, max)
+			{
+				return Math.floor(Math.random() * (max - min + 1) ) + min;
+			}
+			
+			function randomItemGenerator()
+			{
+				var randomRarity = getRndInteger(0, rarity.length -1);
+				var randomItem = getRndInteger(0, weapons.length -1);
+				var itemToDrop = {rare: randomRarity, type: randomItem};
+				
+				return itemToDrop;
+			}
+			
+		</script>
+		
+	</body>
+</html>
